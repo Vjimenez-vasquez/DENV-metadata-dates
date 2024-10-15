@@ -94,7 +94,7 @@ dim(complete)
 head(complete)
 ```
 
-## 9: finalmente generar la tabla final con la data configurar ##
+## 9: finalmente generar la tabla final con la data a configurar ##
 ```r
 write.table(complete,"DENV1/denv1_metadata_3.tsv", row.names=FALSE, sep="\t", quot=F)
 ```
