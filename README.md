@@ -1,7 +1,9 @@
 # DENV-metadata-dates
 un código de R para configurar fechas a utilizar en estudios de epidemiología molecular
 
-```r vadsfasd
+1 asd
+```r
+
 ## 1: configurar el directorio ##
 
 setwd("C:/Users/USUARIO/Documents/dengue_2024/compilacion_2024/analisis")
