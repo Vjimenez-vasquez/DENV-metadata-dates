@@ -1,8 +1,6 @@
 # DENV-metadata-dates
 un código de R para configurar fechas a utilizar en estudios de epidemiología molecular
 
-
-
 ## 1: configurar el directorio ##
 ```r
 setwd("C:/Users/USUARIO/Documents/dengue_2024/compilacion_2024/analisis")
@@ -11,18 +9,20 @@ as.data.frame(dir())
 ```
 
 ## 2: leer el archivo de metadata ##
-
+```r
 d1 <- read.csv("DENV1/denv1_metadata_2.tsv", header=T, sep="\t")
 head(d1)
+```
 
 ## 3: leer el archivo de los tips seteados en el árbol filogenético generado ##
-
+```r
 d1t <- read.csv("DENV1/denv1_tips.txt", header=F)
 head(d1t)
 dim(d1t)
+```
 
 ## 4: identificar las entradas de la metadata compatibles con los tipos de árbol obtenido ##
-
+```r
 d1.2 <- d1[d1$strain %in% d1t$V1, ]
 dim(d1.2)
 
@@ -31,9 +31,10 @@ setdiff(d1.2,d1t$V1)
 
 head(d1.2)
 sort(unique(d1.2$date))
+```
 
 ## 5: identificar las entradas que no presentan fechas de muestreo  o presentan fechas en otro formato ##
-
+```r
 library(lubridate)
 
 r1 <- grep("/",d1.2$date,value = F)
@@ -49,25 +50,29 @@ d1.5 <- rbind(d1.3, d1.4)
 dim(d1.5)
 tail(d1.5)
 c <- d1.5
+```
 
 ## 6: estimar fechas en formato Y-M-D ##
+```r
 library(tidyr)
 we <- separate(c,"date",c("year2","month","day"), sep="-")
 head(we)
 dim(we)
 tail(we)
+```
 
 ## 7: identificar las columnas con fechas incompletas ##
-
+```r
 we1 <- we[we$year2 %in% NA, ]
 we1$year2 <- we1$year
 we2 <- we[!we$year2 %in% NA, ]
 we3 <- rbind(we1,we2)
 dim(we3)
 head(we3)
+```
 
 ## 8: correr en siguiente comando para rellenar las fechas faltantes ##
-
+```r
 ## format : 2022-NA-NA ##
 x <- we3[we3$month %in% NA & we3$day %in% NA, ]
 ## format : 2022-01-NA ##
@@ -87,7 +92,9 @@ z1 <- data.frame(z[,1:6],date=paste0(z$year,"-",z$month,"-",z$day),z[,10:16])
 complete <- rbind(x1,z1)
 dim(complete)
 head(complete)
+```
 
 ## 9: finalmente generar la tabla final con la data configurar ##
-
+```r
 write.table(complete,"DENV1/denv1_metadata_3.tsv", row.names=FALSE, sep="\t", quot=F)
+```
